@@ -3,7 +3,6 @@ import semver from 'semver';
 interface DocsSourceOptions {
 	id: string;
 	name: string;
-	global: string;
 	repo: string;
 	defaultTag?: string;
 	defaultFile?: { category: string; id: string };
@@ -21,8 +20,6 @@ export default class DocsSource {
 	public id = this.options.id;
 
 	public name = this.options.name;
-
-	public global = this.options.global;
 
 	public repo = this.options.repo;
 
