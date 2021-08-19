@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+		<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+		<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+		<meta name="apple-mobile-web-app-title" content="Discord.js Docs">
+		<meta name="application-name" content="Discord-Moderation Docs">
+		<meta name="msapplication-TileColor" content="#090a16">
+		<meta name="theme-color" content="#090a16">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>discord-moderation</title>
+		<meta
+			name="description"
+			content="Discord-Moderation simplify creating moderation system to your Discord Bot."
+		/>
+
+		<meta property="og:title" content="Discord.js" />
+		<meta
+			property="og:description"
+			content="Discord-Moderation simplify creating moderation system to your Discord Bot."
+		/>
+		<meta property="og:image" content="https://discord-moderation.js.org/static/dm_logo.png" />
+	</head>
+	<body>
+		<noscript>
+			<strong
+				>Sorry, but the discord-moderation website doesn't work properly without JavaScript enabled. Please enable it to
+				continue.</strong
+			>
+		</noscript>
+		<script>
+			(() => {
+				const prefersDarkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+				const persistedColorPreference = localStorage.getItem('theme') || 'auto';
+				if (persistedColorPreference === 'dark' || (prefersDarkMode && persistedColorPreference !== 'light')) {
+					document.documentElement.classList.toggle('dark', true);
+				}
+			})();
+		</script>
+		<div id="app" class="h-full"></div>
+		<script type="module" src="/src/main.ts"></script>
+	</body>
+</html>
