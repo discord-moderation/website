@@ -1,3 +1,3 @@
 <template>
-	<img src="https://dm-docs-test.tk/static/logo.png" />
+	<img src="https://discord-moderation.js.org/static/logo.png" />
 </template>
