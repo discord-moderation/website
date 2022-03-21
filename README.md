@@ -1,1 +1,1 @@
-# discordjs-economy/website
+# discord-moderation/website

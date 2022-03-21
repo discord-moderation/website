@@ -20,7 +20,7 @@
 						"
 						active-class="bg-discord-blurple-600"
 					>
-						discordjs-economy
+						discord-moderation
 					</router-link>
 
 					<router-link
@@ -278,7 +278,7 @@
 								font-semibold
 							"
 							@click="isOpen = !isOpen"
-							>discordjs-economy</router-link
+							>discord-moderation</router-link
 						>
 
 						<router-link
