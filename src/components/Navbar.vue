@@ -20,7 +20,7 @@
 						"
 						active-class="bg-discord-blurple-600"
 					>
-						discord-moderation
+						discordjs-economy
 					</router-link>
 
 					<router-link
@@ -65,7 +65,7 @@
 					</a>
 
 					<a
-						:href="`https://discord.gg/invite/eGZfaWsZgR`"
+						:href="`https://discord.gg/zsTgXs24k2`"
 						class="
 							text-gray-200
 							hover:bg-discord-blurple-630 hover:text-white
@@ -278,7 +278,7 @@
 								font-semibold
 							"
 							@click="isOpen = !isOpen"
-							>discord-moderation</router-link
+							>discordjs-economy</router-link
 						>
 
 						<router-link
@@ -316,7 +316,7 @@
 						/></a>
 
 						<a
-							:href="`https://discord.gg/invite/eGZfaWsZgR`"
+							:href="`https://discord.gg/zsTgXs24k2`"
 							class="
 								text-gray-200
 								hover:bg-discord-blurple-630 hover:text-white

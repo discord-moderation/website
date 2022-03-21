@@ -1,7 +1,13 @@
 {
-	"name": "discord-moderation-website",
+	"name": "discord.js-website",
 	"version": "3.0.0",
-	"description": "The website housing documentation for discord-moderation",
+	"description": "The website housing documentation for discord.js",
+	"author": "Noel Buechler <icrawltogo@outlook.com>",
+	"contributors": [
+		"Amish Shah <amishshah.2k@gmail.com>",
+		"Schuyler Cebulskie <Gawdl3y@gawdl3y.com>"
+	],
+	"private": true,
 	"scripts": {
 		"lint": "eslint src --ext .ts,.vue",
 		"lint:fix": "eslint src --ext .ts,.vue --fix",

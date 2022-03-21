@@ -1,7 +1,17 @@
 <template>
-	<strong>[👍] {{ downloads }} downloads</strong> <br />
-	<strong>[⭐] {{ stars }} stars</strong> <br />
-	<strong>[💻] {{ contributors }} contributors</strong>
+	<ul>
+		<li>
+			<strong>{{ downloads }} downloads</strong>
+		</li>
+
+		<li>
+			<strong>{{ stars }} stars</strong>
+		</li>
+
+		<li>
+			<strong>{{ contributors }} contributors</strong>
+		</li>
+	</ul>
 </template>
 
 <script setup lang="ts">

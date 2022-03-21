@@ -34,10 +34,16 @@
 			</span>
 		</div>
 
+		<p
+			v-if="method.deprecated && deprecatedDescription"
+			class="noprose warn !mt-1.5 !mb-2.5"
+			v-html="deprecatedDescription"
+		></p>
+
 		<div class="grid pl-2.5">
 			<p class="noprose" v-html="description"></p>
 			<ParameterTable v-if="method.params" :parameters="method.params" />
-			<div class="font-semibold">
+			<div class="font-semibold mt-3">
 				Returns:
 				<span v-if="method.returns && Array.isArray(method.returns)">
 					<Types v-for="rtrn in method.returns" :key="typeKey(rtrn)" :names="rtrn" />
@@ -52,11 +58,16 @@
 					/>
 				</span>
 				<TypeLink v-else :type="['void']" />
-				<p
-					v-if="method.returns && !Array.isArray(method.returns) && method.returns.description"
-					class="noprose"
-					v-html="returnDescription"
-				></p>
+				<div class="mt-3">
+					<p
+						v-if="
+							(method.returns && !Array.isArray(method.returns) && method.returns.description) ||
+							method.returnsDescription
+						"
+						class="noprose"
+						v-html="returnDescription"
+					></p>
+				</div>
 			</div>
 
 			<div v-if="method.throws" class="font-semibold">
@@ -64,7 +75,7 @@
 				<Types v-for="thrw in method.throws" :key="thrw" :names="thrw" />
 			</div>
 
-			<div v-if="emits" class="font-semibold">
+			<div v-if="emits && emits.length" class="font-semibold">
 				Emits:
 				<ul v-if="emits.length > 1">
 					<li v-for="event in emits" :key="event.text">
@@ -74,12 +85,12 @@
 				<router-link v-else :to="emits[0].link">{{ emits[0].text }}</router-link>
 			</div>
 
-			<div v-if="method.examples" class="font-semibold mt-3">
+			<div v-if="method.examples?.length" class="font-semibold mt-3">
 				Examples:
-				<Codeblock v-for="example in method.examples" :key="example" class="mt-3" :code="example" />
+				<Codeblock v-for="example in method.examples" :key="example" :code="example.trim()" />
 			</div>
 
-			<See v-if="method.see" :see="method.see" />
+			<See v-if="method.see?.length" :see="method.see" />
 		</div>
 	</div>
 
@@ -114,16 +125,26 @@ const route = useRoute();
 const store = useStore();
 
 const docs = computed(() => store.state.docs);
-// @ts-expect-error
-const description = computed(() => markdown(convertLinks(props.method.description, docs.value, router, route)));
-const returnDescription = computed(() =>
+const description = computed(() =>
 	// @ts-expect-error
-	markdown(convertLinks(props.method.returns.description, docs.value, router, route)),
+	markdown(convertLinks(props.method.description ?? 'No description.', docs.value, router, route)),
+);
+const deprecatedDescription = computed(() =>
+	typeof props.method.deprecated === 'string'
+		? // @ts-expect-error
+		  markdown(convertLinks(props.method.deprecated, docs.value, router, route))
+		: '',
+);
+const returnDescription = computed(() =>
+	markdown(
+		// @ts-expect-error
+		convertLinks(props.method.returns.description ?? props.method.returnsDescription, docs.value, router, route),
+	),
 );
 const params = computed(() => (props.method.params ? props.method.params.filter((p) => !p.name.includes('.')) : null));
 const emits = computed(() =>
 	// @ts-expect-error
-	props.method.emits ? props.method.emits.map((e) => parseLink(e.replace(/:event/i, ''), docs.value)) : null,
+	props.method.emits ? props.method.emits.map((e) => parseLink(e, docs.value)) : null,
 );
 const scrollTo = computed(() => `${props.method.scope === 'static' ? 's-' : ''}${props.method.name}`);
 </script>

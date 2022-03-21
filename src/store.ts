@@ -1,9 +1,11 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { InjectionKey } from 'vue';
 import { createStore, useStore as baseUseStore, Store } from 'vuex';
 
 import DocsSource from './data/DocsSource';
 import MainSource from './data/MainSource';
-
 import { Documentation, DocumentationCustomFile } from './interfaces/Documentation';
 import { SearchTerm, DocumentType, DocumentLink } from './util/search';
 import { splitName } from './util/splitName';
@@ -36,9 +38,9 @@ export const store = createStore<State>({
 		branches: [],
 		file: null,
 		stats: {
-			downloads: `${(0).toLocaleString()}+`,
-			stars: `${(0).toLocaleString()}+`,
-			contributors: `${(0).toLocaleString()}+`,
+			downloads: `${(0).toLocaleString("be")}`,
+			stars: `${(0).toLocaleString("be")}`,
+			contributors: `${(0).toLocaleString("be")}`,
 		},
 		searchIndex: [],
 		searchRef: [],
@@ -78,9 +80,12 @@ export const store = createStore<State>({
 			const noop = () => {};
 
 			const [fetchedDownloads, fetchedStars, fetchedContributors] = await Promise.all([
-				fetch('https://api.npmjs.org/downloads/range/2021-06-27:2100-08-21/discord-moderation').then(toJSON, noop),
-				fetch('https://api.github.com/repos/bad-boy-discord/discord-moderation').then(toJSON, noop),
-				fetch('https://api.github.com/repos/bad-boy-discord/discord-moderation/stats/contributors').then(toJSON, noop),
+				fetch('https://api.npmjs.org/downloads/range/2020-03-10:2100-08-21/discord-moderation').then(
+					toJSON,
+					noop,
+				),
+				fetch('https://api.github.com/repos/discord-moderation/source').then(toJSON, noop),
+				fetch('https://api.github.com/repos/discord-moderation/source/stats/contributors').then(toJSON, noop),
 			]);
 
 			if (fetchedDownloads) {
@@ -98,9 +103,9 @@ export const store = createStore<State>({
 			commit({
 				type: 'setStats',
 				stats: {
-					downloads: `${downloads.toLocaleString()}`,
-					stars: `${stars.toLocaleString()}`,
-					contributors: `${contributors.toLocaleString()}`,
+					downloads: `${downloads.toLocaleString("be")}`,
+					stars: `${stars.toLocaleString("be")}`,
+					contributors: `${contributors.toLocaleString("be")}`,
 				},
 			});
 		},
@@ -135,7 +140,7 @@ export const store = createStore<State>({
 			{ commit },
 			{ inputSource, inputTag = inputSource.defaultTag }: { inputSource: DocsSource; inputTag?: string },
 		) => {
-			let documentation;
+			let documentation: any;
 			try {
 				documentation = await inputSource.fetchDocs(inputTag);
 			} catch (error) {
@@ -149,7 +154,6 @@ export const store = createStore<State>({
 					docs: null,
 				});
 
-				// @ts-ignore
 				fetchError.value = error;
 
 				return;
@@ -252,10 +256,18 @@ export const store = createStore<State>({
 			documentation.links = {
 				string: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String',
 				number: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number',
+				String: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String',
+				Number: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number',
+				bigint: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/BigInt',
 				boolean: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean',
+				true: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean',
+				false: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean',
 				symbol: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol',
 				void: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined',
+				undefined: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined',
+				null: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/null',
 				Object: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object',
+				object: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object',
 				Function: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function',
 				function: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function',
 				Array: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array',
@@ -265,27 +277,25 @@ export const store = createStore<State>({
 				RegExp: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp',
 				Promise: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise',
 				Error: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error',
+
+				// Node
 				EventEmitter: 'https://nodejs.org/dist/latest/docs/api/events.html#events_class_eventemitter',
 				Timeout: 'https://nodejs.org/dist/latest/docs/api/timers.html#timers_class_timeout',
+				Immediate: 'https://nodejs.org/dist/latest/docs/api/timers.html#timers_class_immediate',
 				Buffer: 'https://nodejs.org/dist/latest/docs/api/buffer.html#buffer_class_buffer',
 				ReadableStream: 'https://nodejs.org/dist/latest/docs/api/stream.html#stream_class_stream_readable',
 				ChildProcess: 'https://nodejs.org/dist/latest/docs/api/child_process.html#child_process_class_childprocess',
 				Worker: 'https://nodejs.org/api/worker_threads.html#worker_threads_class_worker',
 				MessagePort: 'https://nodejs.org/api/worker_threads.html#worker_threads_class_messageport',
-				ytdl: 'https://github.com/fent/node-ytdl-core/blob/master/typings/index.d.ts',
-				Collection: 'https://discord.js.org/#/docs/collection/master/class/Collection',
-				Client: 'https://discord.js.org/#/docs/main/master/class/Client',
-				Message: 'https://discord.js.org/#/docs/main/master/class/Message',
-				GuildMember: 'https://discord.js.org/#/docs/main/master/class/GuildMember',
-				User: 'https://discord.js.org/#/docs/main/master/class/User',
-				VoiceConnection: 'https://discord.js.org/#/docs/main/master/class/VoiceConnection',
-				StreamDispatcher: 'https://discord.js.org/#/docs/main/master/class/StreamDispatcher',
-				TextChannel: 'https://discord.js.org/#/docs/main/master/class/TextChannel',
-				VoiceChannel: 'https://discord.js.org/#/docs/main/master/class/VoiceChannel',
-				Snowflake: 'https://discord.js.org/#/docs/main/master/typedef/Snowflake',
-				StageChannel: 'https://discord.js.org/#/docs/main/master/class/StageChannel',
-				VoiceState: 'https://discord.js.org/#/docs/main/master/class/VoiceState',
-				Interaction: 'https://discord.js.org/#/docs/main/master/class/Interaction',
+
+				// TypeScript
+				any: 'https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#any',
+				unknown: 'https://www.typescriptlang.org/docs/handbook/2/functions.html#unknown',
+				readonly: 'https://www.typescriptlang.org/docs/handbook/2/classes.html#readonly',
+				Record: 'https://www.typescriptlang.org/docs/handbook/utility-types.html#recordkeys-type',
+				Exclude: 'https://www.typescriptlang.org/docs/handbook/utility-types.html#excludetype-excludedunion',
+				Omit: 'https://www.typescriptlang.org/docs/handbook/utility-types.html#omittype-keys',
+				IterableIterator: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols',
 			};
 
 			// Add links for everything

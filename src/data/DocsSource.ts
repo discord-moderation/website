@@ -1,8 +1,14 @@
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+/* eslint-disable @typescript-eslint/no-use-before-define */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import semver from 'semver';
 
 interface DocsSourceOptions {
 	id: string;
 	name: string;
+	global: string;
 	repo: string;
 	defaultTag?: string;
 	defaultFile?: { category: string; id: string };
@@ -20,6 +26,8 @@ export default class DocsSource {
 	public id = this.options.id;
 
 	public name = this.options.name;
+
+	public global = this.options.global;
 
 	public repo = this.options.repo;
 

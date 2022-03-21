@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 module.exports = {
 	mode: 'jit',
 	purge: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],

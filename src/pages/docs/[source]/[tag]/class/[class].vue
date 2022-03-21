@@ -22,15 +22,15 @@
 			<p v-if="cls?.description" class="!mb-2" v-html="description"></p>
 
 			<div v-if="cls?.construct" class="grid">
-				<h2 class="!mt-2">Constructor</h2>
+				<h2 class="!mt-3">Constructor</h2>
 				<pre
 					ref="codeblock"
 					class="javascript"
-				><code>new {{ docs?.global }}.{{ cls?.name }}(<span v-for="(param, idx) in constructorParameters" :key="param.name">{{ param.name }}{{ (constructorParameters?.length ?? 1) - 1 !== idx ? ', ' : '' }}</span>);</code></pre>
+				><code>new {{ cls?.name }}(<span v-for="(param, idx) in constructorParameters" :key="param.name">{{ param.name }}{{ (constructorParameters?.length ?? 1) - 1 !== idx ? ', ' : '' }}</span>);</code></pre>
 				<ParameterTable v-if="cls.construct.params" :parameters="cls.construct.params" />
 			</div>
 
-			<ClassOverview :properties="cls?.props" :methods="cls?.methods" :events="cls?.events" />
+			<ClassOverview class="mt-3" :properties="cls?.props" :methods="cls?.methods" :events="cls?.events" />
 
 			<h2 v-if="properties && properties.length" class="!mt-4">Properties</h2>
 			<ClassProperty v-for="property in properties" :key="scopedName(property)" :prop="property" />

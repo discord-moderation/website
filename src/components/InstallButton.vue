@@ -6,13 +6,31 @@
 				v-if="!copied"
 				class="inline-block fill-current text-gray-200 cursor-pointer hover:text-white mb-1"
 				aria-hidden="true"
-				@click="copyInstallCmd"
+				@click="copyInstallCmdNPM"
 			/>
 			<heroicons-outline-clipboard-check
 				v-else
 				class="inline-block fill-current text-discord-green-500 cursor-pointer mb-1"
 				aria-hidden="true"
-				@click="copyInstallCmd"
+				@click="copyInstallCmdNPM"
+			/>
+		</button>
+	</code>
+
+	<code class="text-gray-200 bg-discord-blurple-560 p-4 md:text-lg mx-auto rounded-md shadow flex items-center"
+		><span class="hover:text-white mr-2">yarn add discord-moderation</span>
+		<button ref="copyButton" class="focus:outline-none" aria-label="Copy install command">
+			<heroicons-outline-clipboard-copy
+				v-if="!copied"
+				class="inline-block fill-current text-gray-200 cursor-pointer hover:text-white mb-1"
+				aria-hidden="true"
+				@click="copyInstallCmdYARN"
+			/>
+			<heroicons-outline-clipboard-check
+				v-else
+				class="inline-block fill-current text-discord-green-500 cursor-pointer mb-1"
+				aria-hidden="true"
+				@click="copyInstallCmdYARN"
 			/>
 		</button>
 	</code>
@@ -37,9 +55,19 @@ const { show: showTooltip, hide: hideTooltip } = useTippy(copyButton, {
 	hideOnClick: false,
 });
 
-const copyInstallCmd = async () => {
+const copyInstallCmdNPM = async () => {
 	try {
 		await navigator.clipboard.writeText('npm install discord-moderation');
+		showTooltip();
+	} catch {}
+
+	copied.value = true;
+	resetCopied(hideTooltip);
+};
+
+const copyInstallCmdYARN = async () => {
+	try {
+		await navigator.clipboard.writeText('yarn add discord-moderation');
 		showTooltip();
 	} catch {}
 

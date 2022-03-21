@@ -19,10 +19,10 @@ type DocumentationTypeDefinitionParameterMeta = DocumentationClassMeta;
 
 interface DocumentationParameter {
 	name: string;
-	description: string;
+	description?: string;
 	default: string;
 	abstract?: boolean;
-	deprecated?: boolean;
+	deprecated?: boolean | string;
 	access?: string;
 	readonly?: boolean;
 	optional?: boolean;
@@ -59,16 +59,17 @@ interface DocumentationClassConstructor {
 
 export interface DocumentationClassMethod {
 	name: string;
-	description: string;
+	description?: string;
 	access?: string;
 	async?: boolean;
 	abstract?: boolean;
-	deprecated?: boolean;
+	deprecated?: boolean | string;
 	inherited?: boolean;
 	scope?: string;
 	params?: DocumentationClassMethodParameter[];
 	examples?: string[];
 	returns?: string[][][] | { description: string; types: string[][][]; variable: boolean; nullable: boolean };
+	returnsDescription?: string;
 	throws?: string[];
 	see?: string[];
 	meta: DocumentationClassMethodMeta;
@@ -78,7 +79,7 @@ export interface DocumentationClassEvent {
 	name: string;
 	description: string;
 	access?: string;
-	deprecated?: boolean;
+	deprecated?: boolean | string;
 	params: DocumentationClassEventParameter[];
 	see?: string[];
 	meta: DocumentationClassEventMeta;

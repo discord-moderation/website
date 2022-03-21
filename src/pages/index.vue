@@ -1,7 +1,6 @@
 <template>
 	<div class="bg-discord-blurple-500 py-20">
 		<div class="max-w-3xl sm:mx-auto text-center px-8 sm:px-16 flex flex-col gap-10 md:px-12">
-			<Logo class="filter drop-shadow-lg my-6" />
 			<InstallButton />
 		</div>
 	</div>
@@ -20,10 +19,10 @@
 	>
 		<div>
 			<h2>Why?</h2>
+			<span><strong>[⭐] Simple to Use</strong></span> <br />
 			<span><strong>[🔑] Writen on TypeScript</strong></span> <br />
 			<span><strong>[⚙] 100% Promise-based</strong></span> <br />
 			<span><strong>[🙂] Built in Declarations</strong></span> <br />
-			<span><strong>[👍] Discord.JS v13</strong></span> <br />
 		</div>
 		<div>
 			<h2>Statistics</h2>
@@ -38,7 +37,6 @@ import { computed } from 'vue';
 import { useStore } from '~/store';
 import MainSource from '~/data/MainSource';
 
-import Logo from '~/components/Logo.vue';
 import InstallButton from '~/components/InstallButton.vue';
 import Stats from '~/components/Stats.vue';
 
